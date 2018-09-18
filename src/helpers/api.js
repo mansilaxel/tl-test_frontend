@@ -1,16 +1,18 @@
 import axios from 'axios'
 
+let baseUrl = 'http://localhost:8080/api/'
+
 export function get (url) {
   return axios({
     method: 'GET',
-    url: url
+    url: baseUrl + url
   })
 }
 
 export function post (url, payload) {
   return axios({
     method: 'POST',
-    url: url,
+    url: baseUrl + url,
     data: payload
   })
 }
@@ -18,6 +20,6 @@ export function post (url, payload) {
 export function del (url) {
   return axios({
     method: 'DELETE',
-    url: url
+    url: baseUrl + url
   })
 }

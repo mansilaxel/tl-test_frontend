@@ -6,7 +6,7 @@
                 <th>Total</th>
                 <th>Discount</th>
             </tr>
-            <tr v-for="order in orders" :key="order.id">
+            <tr v-for="order in orders" :key="order.id" @click="$router.push('/orders/' + order.id)">
                 <td>{{order.id}}</td>
                 <td>{{order.total}}</td>
                 <td v-if="order.discounts > 0">TODO:implement method.</td>
@@ -28,7 +28,7 @@ export default {
     }
   },
   created () {
-    get('http://localhost:8080/api/orders')
+    get('orders')
       .then(response => {
         this.orders = response.data.data
       })
