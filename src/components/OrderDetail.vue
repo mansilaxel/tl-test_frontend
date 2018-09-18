@@ -14,12 +14,35 @@
                 <td>{{orderLine.quantity}}</td>
                 <td>{{orderLine.total}}</td>
             </tr>
-            <tfoot>
             <br>
-            <tr v-if="order.discounts > 0">TODO:method</tr>
-            <tr v-else><strong>Discount: 0</strong></tr>
+            <tfoot>
+            <tr><strong>Discount: {{totalDiscount}}</strong></tr>
             <tr><strong>Total: {{order.total}}</strong></tr>
             </tfoot>
+        </table>
+        <br>
+        <br>
+        <br>
+        <table>
+            <thead>
+            <tr>
+                <th colspan="4">Options</th>
+            </tr>
+            <td><button @click='fetchData("")'>NONE</button></td>
+            <td><button @click='fetchData("all")'>ALL</button></td>
+            <td><button @click='fetchData("low")'>LOW</button></td>
+            <td><button @click='fetchData("high")'>HIGH</button></td>
+            </thead>
+            <tbody>
+            <tr>
+                <th colspan="1">Amount</th>
+                <th colspan="3">Description</th>
+            </tr>
+            <tr v-for="discount in order.discounts.data" :key="discount.amount">
+                <td colspan="1">{{discount.amount}}</td>
+                <td colspan="3">{{discount.description}}</td>
+            </tr>
+            </tbody>
         </table>
         <p class="error" v-if="errors">{{ errors }}</p>
     </div>
@@ -31,7 +54,8 @@ export default {
   data () {
     return {
       order: {},
-      errors: ''
+      errors: '',
+      totalDiscount: 0
     }
   },
   created () {
@@ -44,6 +68,28 @@ export default {
       })
   },
   methods: {
+    buildURL (param) {
+      return `order/${this.$route.params.id}?` + param
+    },
+    fetchData (param) {
+      var url = this.buildURL(param)
+      get(url)
+        .then(response => {
+          this.order = response.data.data
+          this.calculateDiscountTotal(this.order)
+        })
+        .catch(e => {
+          this.errors = e
+        })
+    },
+    calculateDiscountTotal (data) {
+      this.totalDiscount = 0
+      data.discounts.data.forEach(
+        discount => {
+          this.totalDiscount += discount.amount
+        }
+      )
+    }
   }
 }
 </script>

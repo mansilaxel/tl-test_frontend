@@ -4,13 +4,10 @@
             <tr>
                 <th>Order ID</th>
                 <th>Total</th>
-                <th>Discount</th>
             </tr>
             <tr v-for="order in orders" :key="order.id" @click="$router.push('/orders/' + order.id)">
                 <td>{{order.id}}</td>
                 <td>{{order.total}}</td>
-                <td v-if="order.discounts > 0">TODO:implement method.</td>
-                <td v-else>0</td>
             </tr>
         </table>
         <p class="error" v-if="errors">{{ errors }}</p>
