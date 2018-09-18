@@ -1,0 +1,45 @@
+<template>
+    <div>
+        <table v-if="orders">
+            <tr>
+                <th>Order ID</th>
+                <th>Total</th>
+                <th>Discount</th>
+            </tr>
+            <tr v-for="order in orders" :key="order.id">
+                <td>{{order.id}}</td>
+                <td>{{order.total}}</td>
+                <td v-if="order.discounts > 0">TODO:implement method.</td>
+                <td v-else>0</td>
+            </tr>
+        </table>
+        <p class="error" v-if="errors">{{ errors }}</p>
+
+    </div>
+</template>
+<script>
+import { get } from '../helpers/api'
+export default {
+  name: 'Order',
+  data () {
+    return {
+      orders: [],
+      errors: ''
+    }
+  },
+  created () {
+    get('http://localhost:8080/api/orders')
+      .then(response => {
+        this.orders = response.data.data
+      })
+      .catch(error => {
+        this.errors = error
+      })
+  }
+}
+</script>
+<style scoped>
+    .error {
+        color: red;
+    }
+</style>
