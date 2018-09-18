@@ -1,6 +1,7 @@
 # tl_test-frontend
 
-> This project contains the frontend part of the Teamleader test.
+> This project contains the frontend part of the Teamleader discount test.
+> Keep in mind this is a very basic frontend with zero styling.
 
 ## Build Setup
 
@@ -8,7 +9,7 @@
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost:4040
 npm run dev
 
 # build for production with minification
