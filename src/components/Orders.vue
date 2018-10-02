@@ -10,18 +10,16 @@
                 <td>{{order.total}}</td>
             </tr>
         </table>
-        <p class="error" v-if="errors">{{ errors }}</p>
-
     </div>
 </template>
 <script>
 import { get } from '../helpers/api'
+import Flash from '../helpers/flash'
 export default {
   name: 'Order',
   data () {
     return {
-      orders: [],
-      errors: ''
+      orders: []
     }
   },
   created () {
@@ -29,14 +27,9 @@ export default {
       .then(response => {
         this.orders = response.data.data
       })
-      .catch(error => {
-        this.errors = error
+      .catch(e => {
+        Flash.setError(e)
       })
   }
 }
 </script>
-<style scoped>
-    .error {
-        color: red;
-    }
-</style>
